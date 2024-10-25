@@ -47,9 +47,17 @@ function App() {
     );
     
     async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        const data = await response.json();
-        setForecasts(data);
+        try {
+            const response = await fetch('weatherforecast');
+            if (!response.ok) {
+                throw new Error('Http Error! status: ${response.status}');
+            }
+            const data = await response.json();
+            setForecasts(data);
+        }
+        catch (error) {
+            console.error('Error fetching data:', error);
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 import { Component } from 'react';
-
+import storeApiServices from '../../services/StoreServices.jsx';
 
 export class StoreTable extends Component {
 
@@ -74,11 +74,16 @@ export class StoreTable extends Component {
         this.populateStoresData();
     }
 
-
-
     async populateStoresData() {
-        const response = await fetch('stores');
-        const data = await response.json();
-        this.setState({ stores: data, loading: false });
+        try {
+            const data = await storeApiServices.fetchStores();
+            this.setState({ stores: data , loading: false });
+        }
+        catch (error) {
+            console.error('Error fetching data:', error);
+        }
+        finally {
+            this.setState({ loading: false });
+        }
     }
 }

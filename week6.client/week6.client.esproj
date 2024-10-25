@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.271090-alpha">
+﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.271090-alpha">
   <PropertyGroup>
     <StartupCommand>npm run dev</StartupCommand>
     <JavaScriptTestRoot>src\</JavaScriptTestRoot>
@@ -10,5 +10,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\components\stores\" />
+    <Folder Include="src\hooks\" />
+    <Folder Include="src\mock\" />
+    <Folder Include="src\context\" />
+    <Folder Include="src\utils\" />
+    <Folder Include="src\styles\" />
+    <Folder Include="src\pages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".vscode\launch.json" />
   </ItemGroup>
 </Project>
