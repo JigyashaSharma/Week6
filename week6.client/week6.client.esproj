@@ -15,7 +15,6 @@
     <Folder Include="src\context\" />
     <Folder Include="src\utils\" />
     <Folder Include="src\styles\" />
-    <Folder Include="src\pages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".vscode\launch.json" />
