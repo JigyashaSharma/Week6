@@ -2,6 +2,8 @@ import axios from 'axios';
 import error from 'react';
 const CustomerEndpoint = "/api/customer";
 
+//Task1: Customer services using fetch
+//Haven't coded the pagination logic yet
 const CustomerApiServices = {
     async GetCustomers(pageNumber = 1, pageSize = 10) {
         try {

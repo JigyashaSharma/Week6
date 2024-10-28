@@ -1,12 +1,12 @@
 import { Component } from 'react';
-//import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import CustomerApiServices from '../../services/CustomerServices';
 import AddCustomer from './AddCustomer';
+import { ComponentRoutes } from '../ComponentRoutes';
+
+//Task1: Customer Controller Using class component
 class CustomerTable extends Component {
     static displayName = CustomerTable.name;
-    /*handletoAddCustomer = () => {
-        this.props.navigate = '/add-customer';
-    };*/
     constructor(props) {
         super(props);
         this.state = { customers: [], loading: true, showAddCustomer: false };
@@ -48,23 +48,13 @@ class CustomerTable extends Component {
             : CustomerTable.renderCustomersTable(this.state.customers);
 
         return (
-            <div>
-                <div style={{ display: this.state.showAddCustomer ? 'none' : 'block' }}>
-                    <div style={{ display: 'flex' }}>
-                        <h1 id="tableLabel">Customers</h1>
-                        <button onClick={() => this.setState({ showAddCustomer: true })} style={{ marginLeft: '15px', alignSelf: 'center' }}>Add Customer</button>
-                        {
-                            //<button onClick={this.handletoAddCustomer} style={{ marginLeft: '15px', alignSelf: 'center' }} >AddCustomer</button>
-                        }
-                    </div>
-                    {contents}
+            <div>]
+                <div style={{ display: 'flex', justifyContent: 'left', alignItems: 'center', padding: '20px' }}>
+                    <h1 id="tableLabel">Customers</h1>
+                    <Link to='/add-customer' style={{ verticalAlign: 'middle', marginLeft:'20px', fontSize: '14px', } }>AddCustomer</Link>
                 </div>
-                <div style={{ display: this.state.showAddCustomer ? 'block' : 'none' }}>
-                    <AddCustomer />
-                </div>
+                {contents}
             </div>
-
-
         );
     }
 
@@ -74,6 +64,7 @@ class CustomerTable extends Component {
 
     async PopulateCustomerData() {
         try {
+            ////Haven't coded the pagination logic yet so passing bigger values
             const customerData = await CustomerApiServices.GetCustomers(1, 100);
             this.setState({ customers: customerData.dtos, loading: false });
             console.log("Customer state updated:", this.state.customers);

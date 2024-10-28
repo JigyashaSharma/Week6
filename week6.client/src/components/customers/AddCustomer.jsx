@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-//import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { ComponentRoutes } from '../ComponentRoutes';
 import CustomerApiServices from '../../services/CustomerServices';
 
+//Task1 Using Function component
 const AddCustomer = () => {
     const [customer, setCustomer] = useState({ id: 0, firstname: '', lastname: '', dateOfBirth: ''})
     const [loading, setLoading] = useState(false);
@@ -26,10 +28,7 @@ const AddCustomer = () => {
             setLoading(false);
         }
     };
-    /*
-    const handleBacktoCustomer = () => {
-        navigate('/customer');
-    };*/
+
     return (
         <div>
             <h2>Add Customer Details</h2>
@@ -51,12 +50,12 @@ const AddCustomer = () => {
                     <input id="dob" type="date" value={customer.dateOfBirth} onChange={(e) => setCustomer((prev) => ({ ...prev, dateOfBirth: e.target.value}))} required />
                 </div>
                 <br />
-                <button type="submit" disabled={loading}>
-                    {loading ? 'Adding Customer...':'Add Customer' }
-                </button>
-                {
-                    //<button onClick={handleBacktoCustomer}>Back to Display customers</button>
-                }
+                <div style={{ display: 'flex' }}>
+                    <button type="submit" disabled={loading}>
+                        {loading ? 'Adding Customer...':'Add Customer' }
+                    </button>
+                    <Link to='/customers' style={{marginLeft:'20px'} }>Back To Customers</Link>
+                </div>
             </form>
 
         </div>
