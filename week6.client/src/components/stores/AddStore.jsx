@@ -42,6 +42,10 @@ class AddStore extends Component {
                     error: '',
                     loading: false
                 }); // Reset form fields
+
+                //Task3: Extend the component to refresh the table with the new store after save
+                //Calling parent StoreTable populateStoresData funciton
+                this.props.onAddSuccess();
             }
         } catch (error) {
             this.setState({ error: 'Failed to add customer' });
@@ -68,9 +72,6 @@ class AddStore extends Component {
                         {this.state.loading ? 'Adding Store...' : 'Add Store'}
                         </button>
                     </div>
-                    {
-                        //<button onClick={handleBacktoCustomer}>Back to Display customers</button>
-                    }
                 </form>
             </div>
         );

@@ -49,8 +49,12 @@ export class StoreTable extends Component {
             <div>
                 
                     <h1 id="tableLabel">Stores</h1>
+                {
+                    //Task3: Extend the component to refresh the table with the new store after save
+                    //passing the refreshStoredata as prop to the AddStore
+                }
                 <div style={{ display: 'flex' }}>
-                    <AddStore />  
+                    <AddStore onAddSuccess={this.refreshStoredata} />
                 </div>
                 {contents}
             </div>
@@ -71,6 +75,16 @@ export class StoreTable extends Component {
         
 
         this.populateStoresData();
+    }
+
+    //Task3: Extend the component to refresh the table with the new store after save
+    //creating this function to encapsulate populateStoresData
+    refreshStoredata = async () => {
+        try {
+            await this.populateStoresData(); // Await the async call
+        } catch (error) {
+            console.error('Error refreshing stores data:', error);
+        }
     }
 
     async populateStoresData() {
