@@ -1,20 +1,20 @@
 import { Component } from 'react';
 import storeApiServices from '../../services/StoreServices.jsx';
-
+import { Link } from 'react-router-dom';
+import AddStore from './AddStore.jsx';
 export class StoreTable extends Component {
 
     static displayName = StoreTable.name;
 
     constructor(props) {
         super(props);
-        this.state = { stores: [], loading: true };
+        this.state = { stores: [], loading: true};
         //this.addStores = this.addCustomer.bind(this);
     }
 
     componentDidMount() {
         this.populateStoresData();
     }
-
 
     static renderStoresTable(stores) {
         return (
@@ -45,20 +45,19 @@ export class StoreTable extends Component {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
             : StoreTable.renderStoresTable(this.state.stores);
-
         return (
             <div>
-                <button onClick={this.addStores}>Add Stores</button>
-                <h1 id="tableLabel">Stores</h1>
+                
+                    <h1 id="tableLabel">Stores</h1>
+                <div style={{ display: 'flex' }}>
+                    <AddStore />  
+                </div>
                 {contents}
             </div>
         );
     }
 
     async addStores() {
-
-        
-
         const data = await fetch(
             'stores', {
             method: 'POST',
