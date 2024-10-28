@@ -50,6 +50,14 @@ export default defineConfig({
             '^/stores': {
                 target,
                 secure: false
+            },
+            '^/api/customer': {
+                target,
+                secure: false
+            },
+            '^/products': {
+                target,
+                secure: false
             }
         },
         port: 3001,
