@@ -1,4 +1,6 @@
+using IWeek6.Server.ApplicationTier.Classes;
 using Microsoft.EntityFrameworkCore;
+using Week6.Server.ApplicationTier.Interfaces;
 using Week6.Server.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,9 +11,20 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers().AddNewtonsoftJson();
+
+// Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+builder.Services.AddScoped<ICustomerMethods, CustomerMethods>();
 
 builder.Services.AddDbContext<IndustryConnectWeek2Context>(options =>
-     options.UseSqlServer("Server=localhost;Initial Catalog=IndustryConnectWeek2;Integrated Security=True;TrustServerCertificate=Yes"));
+     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
 var app = builder.Build();
 

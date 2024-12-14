@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { Layout } from './Layout';
-import { StoreTable } from './components/stores/StoreTable'
+import { NavMenu } from './components/navmenu/NavMenu.jsx';
+import { ComponentRoutes } from './components/ComponentRoutes';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
     const [forecasts, setForecasts] = useState();
@@ -34,22 +36,34 @@ function App() {
         </table>;
 
     return (
-        <div>
-            
-            <h1 id="tabelLabel">Weather forecast</h1>
+        <div className="app-layout">
+
+            <NavMenu />
+            <div className="main-content">
+                <ComponentRoutes />
+            </div>
+            {/*<h1 id="tabelLabel">Weather forecast</h1>
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
 
 
-            <StoreTable />
+            <StoreTable />*/ }
 
         </div>
     );
     
     async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        const data = await response.json();
-        setForecasts(data);
+        try {
+            const response = await fetch('weatherforecast');
+            if (!response.ok) {
+                throw new Error('Http Error! status: ${response.status}');
+            }
+            const data = await response.json();
+            setForecasts(data);
+        }
+        catch (error) {
+            console.error('Error fetching data:', error);
+        }
     }
 }
 

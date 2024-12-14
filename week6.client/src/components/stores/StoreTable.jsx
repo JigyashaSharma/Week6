@@ -1,20 +1,20 @@
 import { Component } from 'react';
-
-
+import storeApiServices from '../../services/StoreServices.jsx';
+import { Link } from 'react-router-dom';
+import AddStore from './AddStore.jsx';
 export class StoreTable extends Component {
 
     static displayName = StoreTable.name;
 
     constructor(props) {
         super(props);
-        this.state = { stores: [], loading: true };
+        this.state = { stores: [], loading: true};
         //this.addStores = this.addCustomer.bind(this);
     }
 
     componentDidMount() {
         this.populateStoresData();
     }
-
 
     static renderStoresTable(stores) {
         return (
@@ -45,20 +45,23 @@ export class StoreTable extends Component {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
             : StoreTable.renderStoresTable(this.state.stores);
-
         return (
             <div>
-                <button onClick={this.addStores}>Add Stores</button>
-                <h1 id="tableLabel">Stores</h1>
+                
+                    <h1 id="tableLabel">Stores</h1>
+                {
+                    //Task3: Extend the component to refresh the table with the new store after save
+                    //passing the refreshStoredata as prop to the AddStore
+                }
+                <div style={{ display: 'flex' }}>
+                    <AddStore onAddSuccess={this.refreshStoredata} />
+                </div>
                 {contents}
             </div>
         );
     }
 
     async addStores() {
-
-        
-
         const data = await fetch(
             'stores', {
             method: 'POST',
@@ -74,11 +77,26 @@ export class StoreTable extends Component {
         this.populateStoresData();
     }
 
-
+    //Task3: Extend the component to refresh the table with the new store after save
+    //creating this function to encapsulate populateStoresData
+    refreshStoredata = async () => {
+        try {
+            await this.populateStoresData(); // Await the async call
+        } catch (error) {
+            console.error('Error refreshing stores data:', error);
+        }
+    }
 
     async populateStoresData() {
-        const response = await fetch('stores');
-        const data = await response.json();
-        this.setState({ stores: data, loading: false });
+        try {
+            const data = await storeApiServices.fetchStores();
+            this.setState({ stores: data , loading: false });
+        }
+        catch (error) {
+            console.error('Error fetching data:', error);
+        }
+        finally {
+            this.setState({ loading: false });
+        }
     }
 }
